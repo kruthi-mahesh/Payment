@@ -1,6 +1,7 @@
 package com.app.payment.controller;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 
@@ -24,8 +25,8 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/customers")
-	public List<Customer> getAllCustomers(){
-		return customerDAO.findAll();
+	public Page<Customer> getAllCustomers(Pageable pageable){
+		return customerDAO.findAll(pageable);
 	}
 	
 	@GetMapping("/customers/{id}")

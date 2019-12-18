@@ -12,7 +12,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name="Customers")
+@Table(name="customers")
 @EntityListeners(AuditingEntityListener.class)
 
 public class Customer {

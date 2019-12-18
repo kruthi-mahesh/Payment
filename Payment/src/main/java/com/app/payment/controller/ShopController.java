@@ -1,6 +1,7 @@
 package com.app.payment.controller;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 
@@ -24,8 +25,8 @@ public class ShopController {
 	}
 	
 	@GetMapping("/shops")
-	public List<Shop> getAllShops(){
-		return shopDAO.findAll();
+	public Page<Shop> getAllShops(Pageable pageable){
+		return shopDAO.findAll(pageable);
 	}
 	
 	@GetMapping("/shops/{id}")
@@ -33,7 +34,7 @@ public class ShopController {
 		
 		Shop shop=shopDAO.findOne(shopId);
 		
-		if(shop==null) {
+		if(shop == null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok().body(shop);
@@ -43,23 +44,23 @@ public class ShopController {
 	@PutMapping("/shops/{id}")
 	public ResponseEntity<Shop> updateShop(@PathVariable(value="id") Long shopId,@Valid @RequestBody Shop shopDetails){
 		
-		Shop shop=shopDAO.findOne(shopId);
-		if(shop==null) {
+		Shop shop = shopDAO.findOne(shopId);
+		if(shop == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
 		shop.setName(shopDetails.getName());
 		shop.setEmail(shopDetails.getEmail());
 		
-		Shop updateShop=shopDAO.save(shop);
-		return ResponseEntity.ok().body(updateShop);		
+		Shop updatedShop = shopDAO.save(shop);
+		return ResponseEntity.ok().body(updatedShop);		
 	}
 	
 	@DeleteMapping("/shops/{id}")
 	public ResponseEntity<Shop> deleteShop(@PathVariable(value="id") Long shopId){
 		
 		Shop shop=shopDAO.findOne(shopId);
-		if(shop==null) {
+		if(shop == null) {
 			return ResponseEntity.notFound().build();
 		}
 		shopDAO.delete(shop);
