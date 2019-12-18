@@ -8,6 +8,7 @@ import javax.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.*;
 
@@ -27,12 +28,12 @@ public class ShopCustomer implements Serializable{
 	
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "shop_id", nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties("shopCustomers")
 	private Shop shop;
     
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties("shopCustomers")
 	private Customer customer;
     
     private Integer balance;

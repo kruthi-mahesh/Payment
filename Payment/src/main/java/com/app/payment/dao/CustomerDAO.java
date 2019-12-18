@@ -16,20 +16,20 @@ public class CustomerDAO {
 	CustomerRepository customerRepository;
 	
 	
-	public Customer save(Customer emp) {
-		return customerRepository.save(emp);
+	public Customer save(Customer cust) {
+		return customerRepository.save(cust);
 	}
 	
 	public Page<Customer> findAll(Pageable pageable){
 		return customerRepository.findAll(pageable);
 	}
 	
-	public Customer findOne(Long empid) {
-		return customerRepository.findById(empid).orElse(null);
+	public Customer findOne(Long cust) {
+		return customerRepository.findById(cust).orElse(null);
 	}
 	
-	public void delete(Customer emp) {
-		customerRepository.delete(emp);
+	public void delete(Customer cust) {
+		customerRepository.delete(cust);
 	}
 	
 

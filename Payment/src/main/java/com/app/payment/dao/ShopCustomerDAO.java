@@ -1,12 +1,8 @@
 package com.app.payment.dao;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.payment.model.Customer;
-import com.app.payment.model.Shop;
 import com.app.payment.model.ShopCustomer;
 import com.app.payment.repository.ShopCustomerRepository;
 
@@ -20,10 +16,9 @@ public class ShopCustomerDAO {
 	ShopCustomerRepository shopCustomerRepository;
 	
 	
-	public ShopCustomer save(ShopCustomer emp) {
-		return shopCustomerRepository.save(emp);
+	public ShopCustomer save(ShopCustomer shopCustomer) {
+		return shopCustomerRepository.save(shopCustomer);
 	}
-	
 	
 	public Page<ShopCustomer> findAll(Pageable pageable){
 		return shopCustomerRepository.findAll(pageable);
@@ -49,8 +44,8 @@ public class ShopCustomerDAO {
 		return shopCustomerRepository.findByIdAndShopId(id, shopId).orElse(null);
 	}
 	
-	public ShopCustomer findByIdAndCustomerId(Long id, Long shopId) {
-		return shopCustomerRepository.findByIdAndCustomerId(id, shopId).orElse(null);
+	public ShopCustomer findByIdAndCustomerId(Long id, Long customrId) {
+		return shopCustomerRepository.findByIdAndCustomerId(id, customrId).orElse(null);
 	}
 	
 	public ShopCustomer findByShopIdAndCustomerId(Long shopId, Long customerId) {

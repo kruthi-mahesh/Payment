@@ -8,6 +8,9 @@ import java.util.stream.Stream;
 import javax.persistence.*;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -18,6 +21,7 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 @Entity
+@EqualsAndHashCode(exclude = "shopCustomers")
 @Table(name="shops")
 @EntityListeners(AuditingEntityListener.class)
 
@@ -36,7 +40,8 @@ public class Shop implements Serializable{
 	@Size(min = 5, max = 30)
 	private String email;
 	
-	@OneToMany(mappedBy = "shop", fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "shop",cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnoreProperties("shop")
 	private Set<ShopCustomer> shopCustomers;
 
 	public Shop(@NotNull @Size(min = 3, max = 50) String name, @NotNull @Size(min = 5, max = 30) String email,
@@ -48,10 +53,5 @@ public class Shop implements Serializable{
 		for (ShopCustomer shopCustomer : shopCustomers) 
 			shopCustomer.setShop(this);
 		this.shopCustomers = Stream.of(shopCustomers).collect(Collectors.toSet());
-	}
-	
-	@Override
-	public String toString() {
-		return "Shop {" + "id = " + id + "name = " + name + "email = " + email + "}";
 	}
 }

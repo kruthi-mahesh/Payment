@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.app.payment.dao.*;
 import com.app.payment.model.Shop;
-import com.app.payment.model.ShopCustomer;
 
 @RestController
 @RequestMapping("/payment")

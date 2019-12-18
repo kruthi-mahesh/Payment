@@ -10,6 +10,9 @@ import javax.persistence.*;
 
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,6 +22,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @Data
+@EqualsAndHashCode(exclude = "shopCustomers")
 @Entity
 @Table(name="customers")
 @EntityListeners(AuditingEntityListener.class)
@@ -38,9 +42,10 @@ public class Customer implements Serializable{
 	@Size(min = 5, max = 30)
 	private String email;
 	
-	@OneToMany(fetch = FetchType.LAZY,
-			mappedBy = "customer", 
-			cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer", 
+			cascade = CascadeType.ALL,
+			orphanRemoval = true)
+	@JsonIgnoreProperties("customer")
 	private Set<ShopCustomer> shopCustomers = new HashSet<>();
 
 	public Customer(@NotNull @Size(min = 3, max = 50) String name, 
