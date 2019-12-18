@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.app.payment.dao.ShopDAO;
+import com.app.payment.dao.*;
 import com.app.payment.model.Shop;
+import com.app.payment.model.ShopCustomer;
 
 @RestController
 @RequestMapping("/payment")
@@ -18,6 +19,9 @@ public class ShopController {
 	
 	@Autowired
 	ShopDAO shopDAO;
+	
+	@Autowired
+	ShopCustomerDAO shopCustomerDAO;
 
 	@PostMapping("/shops")
 	public Shop createShop(@Valid @RequestBody Shop shop) {

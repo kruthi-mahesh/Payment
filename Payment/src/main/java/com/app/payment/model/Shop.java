@@ -1,5 +1,10 @@
 package com.app.payment.model;
 
+import java.io.Serializable;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.persistence.*;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,11 +15,13 @@ import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@Data
 @Entity
-@Table(name="Shops")
+@Table(name="shops")
 @EntityListeners(AuditingEntityListener.class)
 
-public class Shop {
+public class Shop implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -29,4 +36,22 @@ public class Shop {
 	@Size(min = 5, max = 30)
 	private String email;
 	
+	@OneToMany(mappedBy = "shop", fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<ShopCustomer> shopCustomers;
+
+	public Shop(@NotNull @Size(min = 3, max = 50) String name, @NotNull @Size(min = 5, max = 30) String email,
+			ShopCustomer... shopCustomers) {
+		super();
+		this.name = name;
+		this.email = email;
+		
+		for (ShopCustomer shopCustomer : shopCustomers) 
+			shopCustomer.setShop(this);
+		this.shopCustomers = Stream.of(shopCustomers).collect(Collectors.toSet());
+	}
+	
+	@Override
+	public String toString() {
+		return "Shop {" + "id = " + id + "name = " + name + "email = " + email + "}";
+	}
 }

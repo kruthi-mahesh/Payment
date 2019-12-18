@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.app.payment.dao.CustomerDAO;
+import com.app.payment.dao.ShopCustomerDAO;
 import com.app.payment.model.Customer;
+import com.app.payment.model.ShopCustomer;
 
 @RestController
 @RequestMapping("/payment")
@@ -18,6 +20,9 @@ public class CustomerController {
 	
 	@Autowired
 	CustomerDAO customerDAO;
+	
+	@Autowired
+	ShopCustomerDAO shopCustomerDAO;
 
 	@PostMapping("/customers")
 	public Customer createCustomer(@Valid @RequestBody Customer cust) {
@@ -66,8 +71,7 @@ public class CustomerController {
 		customerDAO.delete(cust);
 		
 		return ResponseEntity.ok().build();
-		
-		
+			
 	}
-
+    
 }

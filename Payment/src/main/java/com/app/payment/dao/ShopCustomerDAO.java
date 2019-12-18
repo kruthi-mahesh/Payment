@@ -1,9 +1,12 @@
 package com.app.payment.dao;
-import java.util.List;
+
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.payment.model.Customer;
+import com.app.payment.model.Shop;
 import com.app.payment.model.ShopCustomer;
 import com.app.payment.repository.ShopCustomerRepository;
 
@@ -22,23 +25,35 @@ public class ShopCustomerDAO {
 	}
 	
 	
-	public List<ShopCustomer> findAll(Pageable pageable){
-		return shopCustomerRepository.findAll();
-	}
-	
-	public ShopCustomer findOne(Long shopCustomerId) {
-		return shopCustomerRepository.findById(shopCustomerId).orElse(null);
+	public Page<ShopCustomer> findAll(Pageable pageable){
+		return shopCustomerRepository.findAll(pageable);
 	}
 	
 	public void delete(ShopCustomer shopCustomer) {
 		shopCustomerRepository.delete(shopCustomer);
 	}
 	
+	public ShopCustomer findOneById(Long id) {
+		return shopCustomerRepository.findById(id).orElse(null);
+	}
+	
 	public Page<ShopCustomer> findByShopId(Long shopId, Pageable pageable) {
 		return shopCustomerRepository.findByShopId(shopId, pageable);
 	}
 	
+	public Page<ShopCustomer> findByCustomerId(Long customerId, Pageable pageable) {
+		return shopCustomerRepository.findByCustomerId(customerId, pageable);
+	}
+	
 	public ShopCustomer findByIdAndShopId(Long id, Long shopId) {
 		return shopCustomerRepository.findByIdAndShopId(id, shopId).orElse(null);
+	}
+	
+	public ShopCustomer findByIdAndCustomerId(Long id, Long shopId) {
+		return shopCustomerRepository.findByIdAndCustomerId(id, shopId).orElse(null);
+	}
+	
+	public ShopCustomer findByShopIdAndCustomerId(Long shopId, Long customerId) {
+		return shopCustomerRepository.findByShopIdAndCustomerId(shopId, customerId).orElse(null);
 	}
 }
