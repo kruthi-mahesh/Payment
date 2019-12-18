@@ -35,7 +35,6 @@ public class ShopCustomer implements Serializable{
     @JsonIgnore
 	private Customer customer;
     
-    
     private Integer balance;
 
 
