@@ -7,8 +7,10 @@ import javax.persistence.*;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.*;
 
@@ -26,14 +28,19 @@ public class ShopCustomer implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne //(fetch = FetchType.LAZY, optional = false)//, cascade = CascadeType.ALL)
     @JoinColumn(name = "shop_id", nullable = false)
+    //@JsonBackReference
     @JsonIgnoreProperties("shopCustomers")
+    //@JsonIgnore
 	private Shop shop;
     
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne //(fetch = FetchType.LAZY, optional = false)//, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", nullable = false)
     @JsonIgnoreProperties("shopCustomers")
+    //@JsonBackReference
+    //@JsonProperty(access=JsonProperty.READ_ONLY)
+    //@JsonIgnore
 	private Customer customer;
     
     private Integer balance;

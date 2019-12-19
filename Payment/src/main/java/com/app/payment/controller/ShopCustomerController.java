@@ -14,6 +14,7 @@ import com.app.payment.dao.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:4200" })
 @RestController
 @RequestMapping("/payment")
 public class ShopCustomerController {
@@ -136,7 +137,7 @@ public class ShopCustomerController {
     
     }
 
-    @DeleteMapping("/shops/{shop_id}/customers/{customer_id}")
+    @DeleteMapping({"/shops/{shop_id}/customers/{customer_id}", "/customers/{customer_id}/shops/{shop_id}"})
     public ResponseEntity<?> deleteShopCustomerByCustomerId(@PathVariable (value = "shop_id") Long shopId,
                               @PathVariable (value = "customer_id") Long customerId) {
         
@@ -152,7 +153,7 @@ public class ShopCustomerController {
 	}
     
     @DeleteMapping("/shops/{shop_id}/customers/by/{shop_customer_id}")
-    public ResponseEntity<?> deleteShopCustomerById(@PathVariable (value = "shop_id") Long shopId,
+    public ResponseEntity<?> deleteShopCustomerByIdAndShopId(@PathVariable (value = "shop_id") Long shopId,
                               @PathVariable (value = "shop_customer_id") Long id) {
         
     	ShopCustomer shopCustomer = shopCustomerDAO.findByIdAndShopId(id, shopId);
@@ -164,7 +165,22 @@ public class ShopCustomerController {
 		
 		return ResponseEntity.ok().build();
 		
-	} 
+	}
+    
+    @DeleteMapping("/customers/{customer_id}/shops/by/{shop_customer_id}")
+    public ResponseEntity<?> deleteShopCustomerByIdAndCustomerId(@PathVariable (value = "customer_id") Long customerId,
+                              @PathVariable (value = "shop_customer_id") Long id) {
+        
+    	ShopCustomer shopCustomer = shopCustomerDAO.findByIdAndCustomerId(id, customerId);
+		if(shopCustomer == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		shopCustomerDAO.delete(shopCustomer);
+		
+		return ResponseEntity.ok().build();
+		
+	}
     
     @GetMapping("/shop_customers/{shop_customer_id}/shop")
     public ResponseEntity<?> findShopByShopCustomerId(

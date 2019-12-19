@@ -10,6 +10,7 @@ import javax.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,6 +43,7 @@ public class Shop implements Serializable{
 	
 	@OneToMany(mappedBy = "shop",cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnoreProperties("shop")
+	//@JsonManagedReference
 	private Set<ShopCustomer> shopCustomers;
 
 	public Shop(@NotNull @Size(min = 3, max = 50) String name, @NotNull @Size(min = 5, max = 30) String email,

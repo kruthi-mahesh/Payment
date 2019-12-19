@@ -13,6 +13,7 @@ import com.app.payment.dao.CustomerDAO;
 import com.app.payment.dao.ShopCustomerDAO;
 import com.app.payment.model.Customer;
 
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:4200" })
 @RestController
 @RequestMapping("/payment")
 public class CustomerController {

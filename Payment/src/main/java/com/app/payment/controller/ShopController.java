@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.app.payment.dao.*;
 import com.app.payment.model.Shop;
 
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:4200" })
 @RestController
 @RequestMapping("/payment")
 public class ShopController {
